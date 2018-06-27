@@ -7,7 +7,7 @@ def index2():
     return render_template('countdown.html')
 
 @app.route('/google71f185714e0c0e1a.html')
-def index3():
+def index5():
     return render_template('google71f185714e0c0e1a.html')
 
 if __name__ == '__main__':
