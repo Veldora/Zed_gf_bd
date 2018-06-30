@@ -1,204 +1,87 @@
-new Vue({
-	el: '#main',
-	data() {
-		return {
-			showScoreInfo: {
-				info: [],
-				uniInfo: null,
-				year: null
-			},
-			universities: [],
-			form: {
-				tunhien: false,
-				xahoi: false,
-				toan: 0,
-				van: 0,
-				anh: 0,
-				ly: 0,
-				hoa: 0,
-				sinh: 0,
-				su: 0,
-				dia: 0,
-				gdcd: 0,
-				nghe: 0,
-				tb12: 0,
-				khuyenkhich: 0,
-				uutien: 0,
-			},
-			diemtotnghiep: null,
-			messages: [],
-			dh: true,
-			cd: false,
-			hv: false,
-			datadh: JSON.parse(localStorage.getItem('datadh')) || [],
-			datacd: JSON.parse(localStorage.getItem('datacd')) || [],
-			datahv: JSON.parse(localStorage.getItem('datahv')) || [],
-      selectedYear: null
-    }
-	},
-	mounted() {
-		fetch('./index.php?action=getUniversities&type=dh')
-		.then(resp => resp.json())
-		.then(json => {
-			filtered = json.filter(a => a.years.length).map(a => {
-				a.type = 'dh'
-				return a
-			})
-			this.datadh = filtered
-			localStorage.setItem('datadh', JSON.stringify(filtered))
-			this.refresh()
-		})
 
-		fetch('./index.php?action=getUniversities&type=cd')
-		.then(resp => resp.json())
-		.then(json => {
-			filtered = json.filter(a => a.years.length).map(a => {
-				a.type = 'cd'
-				return a
-			})
-			this.datacd = filtered
-			localStorage.setItem('datacd', JSON.stringify(filtered))
-			this.refresh()
-		})
+$(document).ready(function(){
+	"use strict";
 
-		fetch('./index.php?action=getUniversities&type=hv')
-		.then(resp => resp.json())
-		.then(json => {
-			filtered = json.filter(a => a.years.length).map(a => {
-				a.type = 'hv'
-				return a
-			})
-			this.datahv = filtered
-			localStorage.setItem('datahv', JSON.stringify(filtered))
-			this.refresh()
-		})
+	var window_width 	 = $(window).width(),
+	window_height 		 = window.innerHeight,
+	header_height 		 = $(".default-header").height(),
+	header_height_static = $(".site-header.static").outerHeight(),
+	fitscreen 			 = window_height - header_height;
 
-		this.refresh()
-	},
-	methods: {
-		getScore(code, year, type) {
-			return fetch(`./index.php?action=getScoreByYear&code=${code}&year=${year}&type=${type}`)
-			.then(resp => resp.json())
-		},
-		showScore(uni, year) {
-			Object.assign(this.showScoreInfo, {
-				uniInfo: uni,
-				year
-			})
 
-			this.getScore(uni.Code, year, uni.type)
-			.then(json => this.showScoreInfo.info = json)
-		},
-		hideScore() {
-			this.showScoreInfo = {
-				info: [],
-				uniInfo: null,
-				year: null
-			}
-		},
-		calculate() {
-			let diemtotnghiep = null
-			let messages = []
-			let tohop = 0
-			let f = Object.assign({}, this.form)
-			Object.keys(f).map(a => f[a] = (parseFloat(f[a]) || 0))
-			let l = 'Bạn bị điểm liệt môn '
-			let truot = false
+	$(".fullscreen").css("height", window_height)
+	$(".fitscreen").css("height", fitscreen);
 
-			if (!this.form.tunhien && !this.form.xahoi) {
-				messages.push('Bạn chưa chọn bài thi tổ hợp')
-				this.messages = messages
-				return
-			}
+  //-------- Active Sticky Js ----------//
+     $(".default-header").sticky({topSpacing:0});
+  
 
-			if (this.form.tunhien) {
-				if (f.ly <= 1) {
-					messages.push(l + 'Vật lý')
-				}
-				else if (f.hoa <= 1) {
-					messages.push(l + 'Hóa học')
-				}
-				else if (f.sinh <= 1) {
-					messages.push(l + 'Sinh học')
-				}
-				else {
-					tohop = f.ly + f.hoa + f.sinh
-				}
-			}
+     
+   // -------   Active Mobile Menu-----//
 
-			if (this.form.xahoi) {
-				if (f.su <= 1) {
-					messages.push(l + 'Lịch sử')
-				}
-				else if (f.dia <= 1) {
-					messages.push(l + 'Địa lý')
-				}
-				else if (f.gdcd <= 1) {
-					messages.push(l + 'GDCD')
-				}
-				else if ((f.su + f.dia + f.gdcd) > tohop) {
-					tohop = f.su + f.dia + f.gdcd
-				}
-			}
+  $(".menu-bar").on('click', function(e){
+      e.preventDefault();
+      $("nav").toggleClass('hide');
+      $("span", this).toggleClass("lnr-menu lnr-cross");
+      $(".main-menu").addClass('mobile-menu');
+  });
 
-			if (f.toan <= 1) {
-				messages.push(l + 'Toán')
-				truot = true
-			}
-			else if (f.van <= 1) {
-				messages.push(l + 'Ngữ văn')
-				truot = true
-			}
-			else if (f.anh <= 1) {
-				messages.push(l + 'Tiếng Anh')
-				truot = true
-			}
 
-			if (tohop === 0) {
-				truot = true
-			}
+  $('.nav-item a:first').tab('show');
 
-			console.log({
-			 	toan: f.toan, 
-			 	van: f.van, 
-			 	anh: f.anh, 
-			 	tohop, 
-			 	khuyenkhich: f.khuyenkhich, 
-			 	nghe: f.nghe, 
-			 	tb12: f.tb12, 
-			 	uutien: f.uutien,
-			 	tunhien: f.ly + f.hoa + f.sinh,
-			 	xahoi: f.su + f.dia + f.gdcd,
-			 	istn: this.form.tunhien,
-			 	isxh: this.form.xahoi
-			})
 
-			let diem = (((f.toan + f.van + f.anh + tohop / 3 + f.khuyenkhich + f.nghe) / 4) + f.tb12) / 2 + f.uutien
 
-			if (diem < 5) {
-				messages.push('Điểm xét tốt nghiệp của bạn dưới 5')
-			}
-
-			// if (truot || diem < 5) {
-			// 	messages.push('Bạn trượt tốt nghiệp')
-			// }
-
-			this.diemtotnghiep = diem
-			this.messages = messages
-		},
-		refresh() {
-			let res = []
-			if (this.dh) res = res.concat(this.datadh)
-			if (this.cd) res = res.concat(this.datacd)
-			if (this.hv) res = res.concat(this.datahv)
-			this.universities = res
-		}
-	},
-  watch: {
-    'showScoreInfo.year'(newYear) {
-      if (newYear) {
-        this.showScore(this.showScoreInfo.uniInfo, newYear)
+  // Select all links with hashes
+  $('.main-menubar a[href*="#"]')
+    // Remove links that don't actually link to anything
+    .not('[href="#"]')
+    .not('[href="#0"]')
+    .click(function(event) {
+      // On-page links
+      if (
+        location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
+        && 
+        location.hostname == this.hostname
+      ) {
+        // Figure out element to scroll to
+        var target = $(this.hash);
+        target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+        // Does a scroll target exist?
+        if (target.length) {
+          // Only prevent default if animation is actually gonna happen
+          event.preventDefault();
+          $('html, body').animate({
+            scrollTop: target.offset().top
+          }, 1000, function() {
+            // Callback after animation
+            // Must change focus!
+            var $target = $(target);
+            $target.focus();
+            if ($target.is(":focus")) { // Checking if the target was focused
+              return false;
+            } else {
+              $target.attr('tabindex','-1'); // Adding tabindex for elements not focusable
+              $target.focus(); // Set focus again
+            };
+          });
+        }
       }
-    }
-  }
-}) 
+    });
+
+
+    $(document).ready(function() {
+        $('#mc_embed_signup').find('form').ajaxChimp();
+    });      
+  
+var unavailableDates = [
+{start: '2015-08-31', end: '2015-09-05'},
+    {start: '2015-09-11', end: '2015-09-15'},
+    {start: '2015-09-15', end: '2015-09-23'},
+    {start: '2015-10-01', end: '2015-10-07'}
+];
+
+$('#calendar').availabilityCalendar(unavailableDates);
+
+
+
+ });
