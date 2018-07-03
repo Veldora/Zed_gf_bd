@@ -40,11 +40,10 @@
 							</div>
 							<div class="main-menubar d-flex align-items-center">
 								<nav class="hide">
-									<a id="cmsn-hide-id" href="#cmsn" style="display: None">Home</a>
 									<a href="#home">Coundown</a>
-									<a id="letter-hide-id" href="#functionalities" style="display: None">Letter</a>
-									<a id="calendar-hide-id" href="#minh-cld" style="display: None">Calendar</a>
-									<a id="present-hide-id" href="#upcoming" style="display: None">Present</a>
+									<a id="letter-hide-id" href="#functionalities">Letter</a>
+									<a id="calendar-hide-id" href="#minh-cld">Calendar</a>
+									<a id="present-hide-id" href="#upcoming">Present</a>
 								</nav>
 								<div class="menu-bar"><span class="lnr lnr-menu"></span></div>
 							</div>
@@ -55,9 +54,6 @@
 			<!-- End Header Area -->
 
 			<!-- start banner Area -->
-			<section id="cmsn" style="display: None">
-				<img src="http://akami.us/wp-content/uploads/2018/05/background-wallpaper-effect-happy-birthday-background-aayaaaaaaaa-aa-google-atvirutes-of-background-wallpaper-effect.jpg" alt="Happy birthday!!!" style="width:100%">
-			</section>
 			<section class="banner-area relative" id="home">
 				<div class="overlay overlay-bg"></div>
 				<div class="container">
@@ -68,19 +64,19 @@
 								</h1>
 				        		<div class="row clock_sec d-flex flex-row justify-content-between" id="clockdiv">
 				                    <div class="clockinner">
-				                        <span class="days"></span>
+				                        <span class="days">00</span>
 				                        <div class="smalltext">Days</div>
 				                    </div>
 				                    <div class="clockinner">
-				                        <span class="hours"></span>
+				                        <span class="hours">00</span>
 				                        <div class="smalltext">Hours</div>
 				                    </div>
 				                    <div class="clockinner">
-				                        <span class="minutes"></span>
+				                        <span class="minutes">00</span>
 				                        <div class="smalltext">Minutes</div>
 				                    </div>
 				                    <div class="clockinner">
-				                        <span class="seconds"></span>
+				                        <span class="seconds">00</span>
 				                        <div class="smalltext">Seconds</div>
 				                    </div>
 
@@ -92,7 +88,7 @@
 			<!-- End banner Area -->
 
 			<!-- Start facilities Area -->
-			<section class="facilities-area section-gap" id="functionalities" style="display: None">
+			<section class="facilities-area section-gap" id="functionalities">
 				<div class="container">
 					<div class="row d-flex justify-content-center">
 						<div class="col-md-8 pb-80 header-text">
@@ -128,7 +124,7 @@ Phạm Tiến Dũng
 			<!-- End facilities Area -->
 
 			<!-- Start calender Area -->
-			<section class="calender-area relative section-gap" style="display: None" id="minh-cld">
+			<section class="calender-area relative section-gap" id="minh-cld">
 				<div class="overlay overlay-bg"></div>
 				<div class="container">
 					<div class="row d-flex justify-content-center">
@@ -162,19 +158,22 @@ Phạm Tiến Dũng
 
 
 			<!-- Start events Area -->
-			<section style="display: None" class="events-area section-gap" id="upcoming">
+			<section style="background-image: url('http://1.bp.blogspot.com/-3zNoUuZKP-w/VYKNxWMttMI/AAAAAAAAAnE/7UTrxCGyC5I/s1600/colorful-universe-twitter-background.jpg'); background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;" class="events-area section-gap" id="upcoming">
 				<div class="container">
 					<div class="row d-flex justify-content-center">
 						<div class="col-md-8 pb-80 header-text">
-							<h1>Present</h1>
-							<p>
+							<h1 class="text-white">Present</h1>
+							<p class="text-white">
 								Đây là quà sinh nhật mà tớ đã làm tặng cậu cùng với sự trợ giúp đỡ từ Đinh.<br>Tớ mong nó có thể làm sinh nhật năm 16 tuổi của cậu thật đáng nhớ.<br>Tớ yêu cậu!
 							</p>
 						</div>
 					</div>
 					<div class="row d-flex justify-content-center">
 						<div class="row no-padding">
-							<a role="button" class="nw-btn primary-btn" href="#">Nhận quà<span class="lnr lnr-gift"></span></a>
+							<a role="button" class="nw-btn primary-btn" href="../static/happy-birthday.zip" download>Nhận quà<span class="lnr lnr-gift"></span></a>
 						</div>
 					</div>
 				</div>
@@ -203,25 +202,8 @@ Phạm Tiến Dũng
 			<script src="../static/js/jquery.sticky.js"></script>
 			<script src="../static/js/parallax.min.js"></script>
 			<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-			<script src="../static/js/countdown.js"></script>
+			<!--<script src="../static/js/countdown.js"></script>-->
 			<script src="../static/js/jquery.magnific-popup.min.js"></script>
 			<script src="../static/js/main.js"></script>
-			<script>
-			var x = setInterval(function() {
-				var countDownDate = new Date("3 july 2018 00:00:00").getTime();
-				var now = new Date().getTime();
-				var distance = countDownDate - now;
-				if (distance <= 0) {
-					document.getElementById("cmsn-hide-id").style.display = "";
-					document.getElementById("cmsn").style.display = "";
-					document.getElementById("letter-hide-id").style.display = "";
-					document.getElementById("calendar-hide-id").style.display = "";
-					document.getElementById("present-hide-id").style.display = "";
-					document.getElementById("functionalities").style.display = "";
-					document.getElementById("minh-cld").style.display = "";
-					document.getElementById("upcoming").style.display = "";
-				}
-			}, 1000);
-			</script>
 		</body>
 	</html>
